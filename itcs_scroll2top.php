@@ -43,13 +43,11 @@ class PlgSystemItcs_scroll2top extends CMSPlugin
 	 * @param 	array   $config  An array that holds the plugin configuration
 	 * @since	1.0
 	 */
-	public function __construct(&$subject, $config)	
+	public function onAfterDispatch()	
 	{
-		parent::__construct($subject, $config);
 
-		if ($this->app->isClient('administrator')){
-			return;
-		}		
+		//check client
+		if ( ! $this->app->isClient('site')) return;		
 
 		//size
 		$this->size = $this->params->get('size','medium');
@@ -66,15 +64,24 @@ class PlgSystemItcs_scroll2top extends CMSPlugin
 		$this->img = $this->params->get('s2t_image','');
 
 		// Load CSS/JS
-		$document = Factory::getDocument();
-		$document->addStyleSheet (URI::root(true) . '/plugins/system/itcs_scroll2top/assets/css/plg_scroll2top.css' );
-		$document->addScript (URI::root(true) . '/plugins/system/itcs_scroll2top/assets/js/plg_scroll2top.js' );
+		$document = $this->app->getDocument();
+
+		if (!($document instanceof \Joomla\CMS\Document\HtmlDocument))
+		{
+		   return;
+		}
+
+		$wa = $document->getWebAssetManager();
+		$wa->getRegistry()->addRegistryFile('media/plg_system_itcs_scroll2top/joomla.asset.json');
 		
+		$wa->useStyle('plg_system_itcs_scroll2top.scroll2top')
+			->useScript('plg_system_itcs_scroll2top.scroll2top');
+
 		if (stripos($this->icon,"ion") !== false & $this->img == ''){
-			$document->addStyleSheet (URI::root(true) . '/plugins/system/itcs_scroll2top/assets/css/ionicons.min.css' );
+			$wa->useStyle('plg_system_itcs_scroll2top.ion');
 		}
 		if (stripos($this->icon,"fa-") !== false & $this->img == ''){
-			$document->addStyleSheet (URI::root(true) . '/media/system/css/joomla-fontawesome.css' );			
+			$wa->useStyle('plg_system_itcs_scroll2top.fa');
 		}
 
 		// custom Styles
@@ -83,23 +90,22 @@ class PlgSystemItcs_scroll2top extends CMSPlugin
 		$mb	=	$this->params->get('s2t_bottom', 20);
 
 		// add custom style
-		$document->addStyleDeclaration('
+		$wa->addInlineStyle('
 		.snip1452.custom:hover,.scrollToTop.snip1452.custom:hover [class^="fa-"]::before,.scrollToTop.snip1452.custom:hover [class*="fa-"]::before{color: '.$cust_color.';}
 		.snip1452.custom:hover:after{border-color: '.$cust_color.';}
 		.scrollToTop{right: '.$mr.'px;bottom: '.$mb.'px;}
-		.scrollToTop.snip1452::after{background-color: ' . $bg_color . ';}
+		.scrollToTop.snip1452::after{background-color: ' . $bg_color . ';}		
 		');
 	}
-
+	
 	/**
 	 * Do something onAfterRender
 	 */
 	public function onAfterRender()
 	{
 
-		if ($this->app->isClient('administrator')){
-			return;
-		}
+		//check client
+		if ( ! $this->app->isClient('site')) return;
 
 		$body = $this->app->getBody();
 		

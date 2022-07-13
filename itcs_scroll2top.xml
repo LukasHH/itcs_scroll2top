@@ -2,18 +2,18 @@
 <extension version="4.*" method="upgrade" type="plugin" group="system">
 	<name>System - itcs Scroll2Top</name>
 	<author>itcs</author>
-	<creationDate>January 2022</creationDate>
+	<creationDate>July 2022</creationDate>
 	<copyright>Copyright itcs 2022</copyright>
 	<license>GNU General Public License version 3 or later</license>
 	<authorEmail>info@it-conserv.de</authorEmail>
 	<authorUrl>www.it-conserv.de</authorUrl>
-	<version>2.0.0</version>
+	<version>2.1.0</version>
 	<description>
 	<![CDATA[
 	<div class="alert alert-success" style="background-color:#DFF0D8;border-color:#D6E9C6;color: #468847;padding: 1px 0;">
 		<div align="center">
 				<h2 style="color: #f39c12;">Scroll to Top</h2>
-				<p>Version 2.0.0</p>
+				<p>Version 2.1.0</p>
 				<h4>A Button with CSS3 effect, ionicon, different colors and size</h4>
 				<p> </p>
 				<h5>Find your ionicon under <a href="https://ionic.io/ionicons/v2" target="_blank">https://ionic.io/ionicons/v2</a><br />
@@ -42,12 +42,20 @@
 		<filename plugin="itcs_scroll2top">itcs_scroll2top.php</filename>
 		<filename>index.html</filename>
 		<filename>lizenz_gpl.txt</filename>
+		<folder>fields</folder>
 		<folder>language</folder>
-		<folder>assets</folder>
+		<folder>media</folder>
 	</files>
+
+	<media folder="media" destination="plg_system_itcs_scroll2top">
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>js</folder>
+		<file>joomla.asset.json</file>
+	</media>
 	
 	<config>
-		<fields name="params" addfieldpath="/plugins/system/itcs_scroll2top/assets/fields">
+		<fields name="params" addfieldpath="/plugins/system/itcs_scroll2top/fields">
 			<fieldset name="basic">
 				<field name="donation"
 					type="itcsdonation" 
