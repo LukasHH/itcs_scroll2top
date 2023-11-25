@@ -4,11 +4,13 @@
 * ------------------------------------------------------------------------
 * @package     itcs Scroll to Top Button
 * @author      it-conserv.de
-* @copyright   2020 it-conserv.de
+* @copyright   2023 it-conserv.de
 * @license     GNU/GPLv3 <http://www.gnu.org/licenses/gpl-3.0.de.html>
 * @link        https://it-conserv.de
 * ------------------------------------------------------------------------
 */
+
+namespace ITCS\Plugin\System\ItcsScroll2Top\Extension;
 
 // no direct access
 defined('_JEXEC') or die;
@@ -16,11 +18,12 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * plg_itcs_scroll2top
  */
-class PlgSystemItcs_scroll2top extends CMSPlugin
+final class ItcsScroll2Top extends CMSPlugin
 {
 
 	/**
@@ -31,23 +34,26 @@ class PlgSystemItcs_scroll2top extends CMSPlugin
 	 */
 	protected $app;
 
-	/**
-	 * Constructor
-	 *
-	 * For php4 compatibility we must not use the __constructor as a constructor for plugins
-	 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
-	 * This causes problems with cross-referencing necessary for the observer design pattern.
-	 *
-	 * @access	protected
-	 * @param	object	$subject The object to observe
-	 * @param 	array   $config  An array that holds the plugin configuration
-	 * @since	1.0
-	 */
+    /**
+     * Method to catch the onAfterDispatch event.
+     *
+     * @return  void
+     *
+     * @since   4.0
+     */
 	public function onAfterDispatch()	
 	{
 
 		//check client
-		if ( ! $this->app->isClient('site')) return;		
+		if ( ! $this->app->isClient('site')) return;
+		
+		// get document
+		$document = $this->app->getDocument();
+
+		if (!($document instanceof \Joomla\CMS\Document\HtmlDocument))
+		{
+		   return;
+		}		
 
 		//size
 		$this->size = $this->params->get('size','medium');
@@ -61,16 +67,24 @@ class PlgSystemItcs_scroll2top extends CMSPlugin
 
 		//icon
 		$this->icon = $this->params->get('icon','ion-chevron-up');
-		$this->img = $this->params->get('s2t_image','');
+		//$this->img = $this->params->get('s2t_image','');
 
-		// Load CSS/JS
-		$document = $this->app->getDocument();
+		// image
+		$img = $this->params->get('s2t_image','');
 
-		if (!($document instanceof \Joomla\CMS\Document\HtmlDocument))
+		if( !empty( $img ) )
 		{
-		   return;
+			$image_info = HTMLHelper::_('cleanImageURL', $img);
+			$this->img	= $image_info->url;
+		}
+		else{
+			$this->img = '';
 		}
 
+
+
+
+		// load CSS
 		$wa = $document->getWebAssetManager();
 		$wa->getRegistry()->addRegistryFile('media/plg_system_itcs_scroll2top/joomla.asset.json');
 		
