@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="4.*" method="upgrade" type="plugin" group="system">
-	<name>System - itcs Scroll2Top</name>
+<extension method="upgrade" type="plugin" group="system">
+	<name>itcs_scroll2top</name>
 	<author>itcs</author>
-	<creationDate>July 2022</creationDate>
-	<copyright>Copyright itcs 2022</copyright>
+	<creationDate>November 2023</creationDate>
+	<copyright>Copyright itcs 2023</copyright>
 	<license>GNU General Public License version 3 or later</license>
 	<authorEmail>info@it-conserv.de</authorEmail>
 	<authorUrl>www.it-conserv.de</authorUrl>
-	<version>2.1.0</version>
+	<version>4.0.0</version>
 	<description>
 	<![CDATA[
 	<div class="alert alert-success" style="background-color:#DFF0D8;border-color:#D6E9C6;color: #468847;padding: 1px 0;">
 		<div align="center">
 				<h2 style="color: #f39c12;">Scroll to Top</h2>
-				<p>Version 2.1.0</p>
+				<p>Version 4.0.0</p>
 				<h4>A Button with CSS3 effect, ionicon, different colors and size</h4>
 				<p> </p>
 				<h5>Find your ionicon under <a href="https://ionic.io/ionicons/v2" target="_blank">https://ionic.io/ionicons/v2</a><br />
 				and the font awesome icon under <a href="https://fontawesome.com/icons/" target="_blank">https://fontawesome.com/icons/</a><br /><br />
 				Select your color (red,blue,yellow) and size (small, medium, large)</h5>
 		<p>The CSS3 Style is a free ressource from <a href="http://littlesnippets.net" target="_blank">http://littlesnippets.net</a></p>
-		<p>Copyright 2022 <a href="http://www.it-conserv.de/" title="it-conserv.de" target="_blank">www.it-conserv.de</a>.</p>
+		<p>Copyright 2023 <a href="http://www.it-conserv.de/" title="it-conserv.de" target="_blank">www.it-conserv.de</a>.</p>
 		</div>
 		<!--
      <style>table.adminform{width: 100%;}</style>
@@ -32,19 +32,14 @@
 		<language tag="en-GB">language/en-GB/plg_system_itcs_scroll2top.ini</language>
 		<language tag="de-DE">language/de-DE/plg_system_itcs_scroll2top.ini</language>
 	</languages>
-	<updateservers>
-		<server type="extension" priority="2" name="Plugin itcs Scroll2Top">
-			https://it-conserv.de/phocadownload/plugins/itcs_scroll2top/itcs_scroll2top-update.xml
-		</server>
-	</updateservers>
-	<changelogurl>https://it-conserv.de/phocadownload/plugins/itcs_scroll2top/itcs_scroll2top-changelog.xml</changelogurl>		
+
+	<namespace path="src">ITCS\Plugin\System\ItcsScroll2Top</namespace>
+	
 	<files>
-		<filename plugin="itcs_scroll2top">itcs_scroll2top.php</filename>
-		<filename>index.html</filename>
-		<filename>lizenz_gpl.txt</filename>
-		<folder>fields</folder>
+		<folder plugin="itcs_scroll2top">services</folder>
 		<folder>language</folder>
-		<folder>media</folder>
+		<folder>src</folder>
+		<filename>lizenz_gpl.txt</filename>
 	</files>
 
 	<media folder="media" destination="plg_system_itcs_scroll2top">
@@ -53,9 +48,16 @@
 		<folder>js</folder>
 		<file>joomla.asset.json</file>
 	</media>
+
+	<updateservers>
+		<server type="extension" priority="2" name="Plugin itcs Scroll2Top">
+			https://it-conserv.de/phocadownload/plugins/itcs_scroll2top/itcs_scroll2top-update.xml
+		</server>
+	</updateservers>
+	<changelogurl>https://it-conserv.de/phocadownload/plugins/itcs_scroll2top/itcs_scroll2top-changelog.xml</changelogurl>		
 	
 	<config>
-		<fields name="params" addfieldpath="/plugins/system/itcs_scroll2top/fields">
+		<fields name="params" addfieldpath="/plugins/system/itcs_scroll2top/src/fields">
 			<fieldset name="basic">
 				<field name="donation"
 					type="itcsdonation" 
