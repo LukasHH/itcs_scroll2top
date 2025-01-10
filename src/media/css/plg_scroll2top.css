@@ -23,8 +23,8 @@
 }
 
 .scrollToTop.visible {
-  visibility: visible;
-  opacity: 1;
+  visibility: visible !important;
+  opacity: 1 !important;
   transition: opacity 1s ease-in-out;
 }
 
