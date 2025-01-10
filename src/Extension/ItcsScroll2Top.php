@@ -34,6 +34,18 @@ final class ItcsScroll2Top extends CMSPlugin
 	 */
 	protected $app;
 
+	// set the size of button
+	protected $size;
+
+	// set the color of button
+	protected $color;
+
+	// set the icon of button
+	protected $icon;
+
+	// set the image of button
+	protected $img;
+
     /**
      * Method to catch the onAfterDispatch event.
      *
